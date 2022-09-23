@@ -133,8 +133,8 @@ namespace KuboMod
                     Texture2D texture = renderer.sprite.texture;
 
                     string texPath = Path.Combine(Path.GetFullPath("."), "mod_overrides");
-                    FileLog.Log("Mods Path: " + texPath);
-                    FileLog.Log("Texture file found: " + File.Exists(texPath + "\\SpriteAtlasTexture_NPC_Pommy_512x256_fmt4.png").ToString());
+                    //FileLog.Log("Mods Path: " + texPath);
+                    //FileLog.Log("Texture file found: " + File.Exists(texPath + "\\SpriteAtlasTexture_NPC_Pommy_512x256_fmt4.png").ToString());
                     if (File.Exists(texPath + "\\SpriteAtlasTexture_NPC_Pommy_512x256_fmt4.png"))
                     {
                         texture.LoadImage(File.ReadAllBytes(texPath + "\\SpriteAtlasTexture_NPC_Pommy_512x256_fmt4.png"));
