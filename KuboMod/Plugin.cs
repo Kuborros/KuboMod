@@ -1,6 +1,7 @@
 ﻿using BepInEx;
 using HarmonyLib;
 using System.IO;
+using UnityEngine;
 
 namespace KuboMod
 {
@@ -8,7 +9,8 @@ namespace KuboMod
     [BepInProcess("FP2.exe")]
     public class Plugin : BaseUnityPlugin
     {
-        public static string ModsDirectory { get; } = Path.Combine(Paths.GameRootPath, "mod_overrides");
+
+
         private void Awake()
         {
             //HarmonyFileLog.Enabled = true;
@@ -36,7 +38,7 @@ namespace KuboMod
                 priority = 1,
                 lines =
                     new NPCDialogLine[] { new NPCDialogLine{ text = "Hi, I’m Kubo. Im the captain of one of the airships you can see in the skies.", pose = "Pose1", options = new NPCDialogOption[0] },
-                    new NPCDialogLine{ text = "The ship currently is being repainted back in <c=blue>Shang Tu</c>, so i took few days off to visit the <c=red>Battlesphere</c>.", pose = "Pose1", options = new NPCDialogOption[0]},
+                    new NPCDialogLine{ text = "The ship currently is being repainted back in <c=blue>Shang Tu</c>, so i took few days off to visit the <c=yellow>Battlesphere</c>.", pose = "Pose1", options = new NPCDialogOption[0]},
                     new NPCDialogLine{ text = "<i><s=0.75>Just between us two, do you think i have chances with that cute <c=orange>bat girl</c> next to us?</s></i>", pose = "Pose1" , options = new NPCDialogOption[0]}
                 }
             },
@@ -60,7 +62,7 @@ namespace KuboMod
                 priority = 3,
                 lines =
                     new NPCDialogLine[] { new NPCDialogLine{ text = "Hi, I’m Kubo. Im the captain of one of the airships you can see in the skies.", pose = "Pose1", options = new NPCDialogOption[0] },
-                    new NPCDialogLine{ text = "Well, i <b>was</b> before bunch of <c=brown>Sky Pirates</c> bombarded <c=blue>Shang Tu</c> dockyards.", pose = "Pose1", options = new NPCDialogOption[0]},
+                    new NPCDialogLine{ text = "Well, i <b>was</b> before bunch of <c=gold>Sky Pirates</c> bombarded <c=blue>Shang Tu</c> dockyards.", pose = "Pose1", options = new NPCDialogOption[0]},
                     new NPCDialogLine{ text = "<i><s=0.75>It ruined all my plans for this month, and its not even the <c=green>first time this happened</c>.</s></i>", pose = "Pose1" , options = new NPCDialogOption[0]}
                 }
             },
@@ -71,7 +73,7 @@ namespace KuboMod
                 disableAtStoryFlag = 0,
                 priority = 4,
                 lines =
-                    new NPCDialogLine[] { new NPCDialogLine{ text = "I sure love having my ship grounded during <b> Major Historical Events </b>.", pose = "Pose1", options = new NPCDialogOption[0] },
+                    new NPCDialogLine[] { new NPCDialogLine{ text = "I sure love having my ship grounded during <s=1.25> Major Historical Events </s>.", pose = "Pose1", options = new NPCDialogOption[0] },
                     new NPCDialogLine{ text = "There's only so much help i can offer without my ship afterall. <br> But i did all i could anyways!", pose = "Pose1", options = new NPCDialogOption[0]},
                     new NPCDialogLine{ text = "<i><s=0.75>Im just glad me and <c=orange>Maria</c> got out of it all unharmed.</s></i>", pose = "Pose1" , options = new NPCDialogOption[0]}
                 }
@@ -127,11 +129,20 @@ namespace KuboMod
                 }
             }
             };
+                    SpriteRenderer renderer = (SpriteRenderer)GameObject.Find("NPC_Pommy").GetComponent(typeof(SpriteRenderer));
+                    Texture2D texture = renderer.sprite.texture;
+
+                    string texPath = Path.Combine(Path.GetFullPath("."), "mod_overrides");
+                    FileLog.Log("Mods Path: " + texPath);
+                    FileLog.Log("Texture file found: " + File.Exists(texPath + "\\SpriteAtlasTexture_NPC_Pommy_512x256_fmt4.png").ToString());
+                    if (File.Exists(texPath + "\\SpriteAtlasTexture_NPC_Pommy_512x256_fmt4.png"))
+                    {
+                        texture.LoadImage(File.ReadAllBytes(texPath + "\\SpriteAtlasTexture_NPC_Pommy_512x256_fmt4.png"));
+                    }
                 }
             }
 
         }
     }
 }
-
 
