@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace KuboMod
 {
-    [BepInPlugin("com.kuborro.plugins.fp2.kubomod", PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
+    [BepInPlugin("com.kuborro.plugins.fp2.kubomod", PluginInfo.PLUGIN_NAME, "1.1.0")]
     [BepInProcess("FP2.exe")]
     public class Plugin : BaseUnityPlugin
     {
@@ -16,19 +16,18 @@ namespace KuboMod
             //HarmonyFileLog.Enabled = true;
             var harmony = new Harmony("com.kuborro.plugins.fp2.kubomod");
             harmony.PatchAll(typeof(Patch));
+            harmony.PatchAll(typeof(Patch2));
         }
 
         class Patch
         {
             [HarmonyPostfix]
             [HarmonyPatch(typeof(FPHubNPC), nameof(FPHubNPC.OnActivation), MethodType.Normal)]
-            static void Postfix(ref string ___NPCName, ref NPCDialog[] ___dialog, ref int[] ___sortedPriorityList, ref bool ___checkUnreadDialog)
+            static void Postfix(ref string ___NPCName, ref NPCDialog[] ___dialog, ref int[] ___sortedPriorityList)
             {
-                //FileLog.Log(___NPCName);
                 if (___NPCName == "Pommy")
                 {
                     ___NPCName = "Kubo";
-                    ___checkUnreadDialog = false;
                     ___sortedPriorityList = new int[8] { 7, 6, 5, 4, 3, 2, 1, 0 };
                     ___dialog = new NPCDialog[8] { new NPCDialog
             {
@@ -139,6 +138,41 @@ namespace KuboMod
                     {
                         texture.LoadImage(File.ReadAllBytes(texPath + "\\SpriteAtlasTexture_NPC_Pommy_512x256_fmt4.png"));
                     }
+
+                    int npcnumber = FPSaveManager.GetNPCNumber("Pommy");
+                    int diaLenght = (___sortedPriorityList.Length);
+                    if (FPSaveManager.npcDialogHistory[npcnumber].dialog.Length < diaLenght)
+                    {
+                        FPSaveManager.npcDialogHistory[npcnumber].dialog = new bool[diaLenght];
+                    }
+                }
+            }
+        }
+        class Patch2
+        {
+            [HarmonyPrefix]
+            [HarmonyPatch(typeof(FPSaveManager), nameof(FPSaveManager.GetNPCNumber), MethodType.Normal)]
+            static bool Prefix(string name, ref int __result)
+            {
+                if (name == "Kubo")
+                {
+                    __result = FPSaveManager.GetNPCNumber("Pommy");
+                    return false;
+                }
+                return true;
+            }
+
+
+        }
+        class Patch3
+        {
+            [HarmonyPostfix]
+            [HarmonyPatch(typeof(FPHubNPC), nameof(FPHubNPC.Talk), MethodType.Normal)]
+            static void Postfix(int ___npcnumber)
+            {
+                if (___npcnumber == FPSaveManager.GetNPCNumber("Pommy"))
+                {
+                    FPSaveManager.npcDialogHistory[___npcnumber].dialog[0] = true;
                 }
             }
 
