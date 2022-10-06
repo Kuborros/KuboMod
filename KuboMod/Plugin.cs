@@ -17,6 +17,7 @@ namespace KuboMod
             var harmony = new Harmony("com.kuborro.plugins.fp2.kubomod");
             harmony.PatchAll(typeof(Patch));
             harmony.PatchAll(typeof(Patch2));
+            harmony.PatchAll(typeof(Patch3));
         }
 
         class Patch
