@@ -34,7 +34,7 @@ namespace KuboMod
             {
                 description = "Intro",
                 enableAtStoryFlag = 0,
-                disableAtStoryFlag = 22,
+                disableAtStoryFlag = 9,
                 priority = 1,
                 lines =
                     new NPCDialogLine[] { new NPCDialogLine{ text = "Hi, I’m Kubo. Im the captain of one of the airships you can see in the skies.", pose = "Pose1", options = new NPCDialogOption[0] },
@@ -73,8 +73,8 @@ namespace KuboMod
                 disableAtStoryFlag = 0,
                 priority = 4,
                 lines =
-                    new NPCDialogLine[] { new NPCDialogLine{ text = "I sure love having my ship grounded during <s=1.25> Major Historical Events </s>.", pose = "Pose1", options = new NPCDialogOption[0] },
-                    new NPCDialogLine{ text = "There's only so much help i can offer without my ship afterall. <br> But i did all i could anyways!", pose = "Pose1", options = new NPCDialogOption[0]},
+                    new NPCDialogLine[] { new NPCDialogLine{ text = "I sure love having my ship grounded during <w>Major Historical Events</w>.", pose = "Pose1", options = new NPCDialogOption[0] },
+                    new NPCDialogLine{ text = "There's only so much help i can offer without <i>my ship</i> afterall. <br> But i did all i could anyways!", pose = "Pose1", options = new NPCDialogOption[0]},
                     new NPCDialogLine{ text = "<i><s=0.75>Im just glad me and <c=orange>Maria</c> got out of it all unharmed.</s></i>", pose = "Pose1" , options = new NPCDialogOption[0]}
                 }
             },
@@ -97,9 +97,9 @@ namespace KuboMod
                 disableAtStoryFlag = 39,
                 priority = 6,
                 lines =
-                    new NPCDialogLine[] { new NPCDialogLine{ text = "Hi, I’m Kubo. Im the captain of one of the airships you can see in the skies.", pose = "Pose1", options = new NPCDialogOption[0] },
-                    new NPCDialogLine{ text = "Well, i *was* before bunch of Sky Pirates bombarded Shang Mu dockyards...", pose = "Pose1", options = new NPCDialogOption[0]},
-                    new NPCDialogLine{ text = "Anyhow, i heard Mayor Zao needs a new captain for his <c=red>'Amazing luxury pleasure cruiser 2.0'</c>, might as well apply for that. Its not like we will be chasing starships or something with it, <j>right?</j>", pose = "Pose1" , options = new NPCDialogOption[0]},
+                    new NPCDialogLine[] { new NPCDialogLine{ text = "Hello there. Im the captain of one of the airships you can see in the skies.", pose = "Pose1", options = new NPCDialogOption[0] },
+                    new NPCDialogLine{ text = "<s=1.25><j>If only i had a working airship!</j></s>", pose = "Pose1", options = new NPCDialogOption[0]},
+                    new NPCDialogLine{ text = "Anyhow, i heard Mayor Zao needs a new captain for his <c=red>'Amazing Luxury Pleasure Cruiser 2.0'</c>, might as well apply for that. Its not like we will be chasing starships or something with it, <j>right?</j>", pose = "Pose1" , options = new NPCDialogOption[0]},
                     new NPCDialogLine{ text = "<i><s=0.75>And maybe i can take <c=orange>Maria</c> on a ride with that thing~</s></i>", pose = "Pose1" , options = new NPCDialogOption[0] }
                 }
             },
@@ -169,11 +169,11 @@ namespace KuboMod
         {
             [HarmonyPostfix]
             [HarmonyPatch(typeof(FPHubNPC), nameof(FPHubNPC.Talk), MethodType.Normal)]
-            static void Postfix(int ___npcnumber)
+            static void Postfix(string ___NPCName)
             {
-                if (___npcnumber == FPSaveManager.GetNPCNumber("Pommy"))
+                if (___NPCName == "Kubo")
                 {
-                    FPSaveManager.npcDialogHistory[___npcnumber].dialog[0] = true;
+                    FPSaveManager.npcDialogHistory[FPSaveManager.GetNPCNumber("Pommy")].dialog[0] = true;
                 }
             }
 
