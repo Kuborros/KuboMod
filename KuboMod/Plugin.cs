@@ -97,9 +97,9 @@ namespace KuboMod
                 disableAtStoryFlag = 39,
                 priority = 6,
                 lines =
-                    new NPCDialogLine[] { new NPCDialogLine{ text = "Hello there. Im the captain of one of the airships you can see in the skies.", pose = "Pose1", options = new NPCDialogOption[0] },
+                    new NPCDialogLine[] { new NPCDialogLine{ text = "That rainbow volcano must be quite a sight from up in the air. I should go there sometime.", pose = "Pose1", options = new NPCDialogOption[0] },
                     new NPCDialogLine{ text = "<s=1.25><j>If only i had a working airship!</j></s>", pose = "Pose1", options = new NPCDialogOption[0]},
-                    new NPCDialogLine{ text = "Anyhow, i heard Mayor Zao needs a new captain for his <c=red>'Amazing Luxury Pleasure Cruiser 2.0'</c>, might as well apply for that. Its not like we will be chasing starships or something with it, <j>right?</j>", pose = "Pose1" , options = new NPCDialogOption[0]},
+                    new NPCDialogLine{ text = "Anyhow, i heard Mayor Zao needs a new captain for his <br><c=red>'Amazing Luxury Pleasure Cruiser 2.0'</c> or <w>something</w> like that... Might as well apply for it.<br> Its not like we will be chasing starships or something with it, <j>right?</j>", pose = "Pose1" , options = new NPCDialogOption[0]},
                     new NPCDialogLine{ text = "<i><s=0.75>And maybe i can take <c=orange>Maria</c> on a ride with that thing~</s></i>", pose = "Pose1" , options = new NPCDialogOption[0] }
                 }
             },
