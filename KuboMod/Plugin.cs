@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace KuboMod
 {
-    [BepInPlugin("com.kuborro.plugins.fp2.kubomod", PluginInfo.PLUGIN_NAME, "1.1.0")]
+    [BepInPlugin("com.kuborro.plugins.fp2.kubomod", PluginInfo.PLUGIN_NAME, "1.2.0")]
     [BepInProcess("FP2.exe")]
     public class Plugin : BaseUnityPlugin
     {
@@ -18,6 +18,7 @@ namespace KuboMod
             harmony.PatchAll(typeof(Patch));
             harmony.PatchAll(typeof(Patch2));
             harmony.PatchAll(typeof(Patch3));
+            harmony.PatchAll(typeof(Patch4));
         }
 
         class Patch
@@ -178,6 +179,33 @@ namespace KuboMod
             }
 
         }
+
+        class Patch4 
+        {
+            [HarmonyPostfix]
+            [HarmonyPatch(typeof(MovingTrain), "Start", MethodType.Normal)]
+            static void Postfix(MovingTrain __instance)
+            {
+                GameObject spTrain = __instance.gameObject;
+                SpriteRenderer[] spriteRenderers = spTrain.GetComponentsInChildren<SpriteRenderer>();
+
+                foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+                {
+                    if (spriteRenderer.sprite.texture.name == "SpriteAtlasTexture-Passengers-256x256-fmt4")
+                    {
+                        string texPath = Path.Combine(Path.GetFullPath("."), "mod_overrides");
+                        //FileLog.Log("Mods Path: " + texPath + "\\SpriteAtlasTexture - Passengers - 256x256 - fmt4.png");
+                        //FileLog.Log("Texture file found: " + File.Exists(texPath + "\\SpriteAtlasTexture-Passengers-256x256-fmt4.png").ToString());
+                        if (File.Exists(texPath + "\\SpriteAtlasTexture-Passengers-256x256-fmt4.png"))
+                        {
+                            spriteRenderer.sprite.texture.LoadImage(File.ReadAllBytes(texPath + "\\SpriteAtlasTexture-Passengers-256x256-fmt4.png"));
+                        }
+                    }
+                }
+
+            }
+        }
+
     }
 }
 
