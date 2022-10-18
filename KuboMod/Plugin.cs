@@ -194,11 +194,11 @@ namespace KuboMod
                     if (spriteRenderer.sprite.texture.name == "SpriteAtlasTexture-Passengers-256x256-fmt4")
                     {
                         string texPath = Path.Combine(Path.GetFullPath("."), "mod_overrides");
-                        //FileLog.Log("Mods Path: " + texPath + "\\SpriteAtlasTexture - Passengers - 256x256 - fmt4.png");
-                        //FileLog.Log("Texture file found: " + File.Exists(texPath + "\\SpriteAtlasTexture-Passengers-256x256-fmt4.png").ToString());
-                        if (File.Exists(texPath + "\\SpriteAtlasTexture-Passengers-256x256-fmt4.png"))
+                        //FileLog.Log("Mods Path: " + texPath + "\\SpriteAtlasTexture_Passengers_256x256_fmt4.png");
+                        //FileLog.Log("Texture file found: " + File.Exists(texPath + "\\SpriteAtlasTexture_Passengers_256x256_fmt4.png").ToString());
+                        if (File.Exists(texPath + "\\SpriteAtlasTexture_Passengers_256x256_fmt4.png"))
                         {
-                            spriteRenderer.sprite.texture.LoadImage(File.ReadAllBytes(texPath + "\\SpriteAtlasTexture-Passengers-256x256-fmt4.png"));
+                            spriteRenderer.sprite.texture.LoadImage(File.ReadAllBytes(texPath + "\\SpriteAtlasTexture_Passengers_256x256_fmt4.png"));
                         }
                     }
                 }
