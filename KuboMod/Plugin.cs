@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace KuboMod
 {
-    [BepInPlugin("com.kuborro.plugins.fp2.kubomod", PluginInfo.PLUGIN_NAME, "1.2.0")]
+    [BepInPlugin("com.kuborro.plugins.fp2.kubomod", "KuboMod", "1.3.0")]
     [BepInProcess("FP2.exe")]
     public class Plugin : BaseUnityPlugin
     {
