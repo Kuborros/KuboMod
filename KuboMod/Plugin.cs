@@ -25,7 +25,7 @@ namespace KuboMod
         {
             [HarmonyPostfix]
             [HarmonyPatch(typeof(FPHubNPC), nameof(FPHubNPC.OnActivation), MethodType.Normal)]
-            static void Postfix(ref string ___NPCName, ref NPCDialog[] ___dialog, ref int[] ___sortedPriorityList)
+            static void Postfix(ref string ___NPCName, ref NPCDialog[] ___dialog, ref int[] ___sortedPriorityList, FPHubNPC __instance)
             {
                 if (___NPCName == "Pommy")
                 {
@@ -147,6 +147,7 @@ namespace KuboMod
                     {
                         FPSaveManager.npcDialogHistory[npcnumber].dialog = new bool[diaLenght];
                     }
+                    __instance.CheckForUnreadDialog();
                 }
             }
         }
