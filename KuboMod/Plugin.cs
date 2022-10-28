@@ -1,6 +1,7 @@
 ﻿using BepInEx;
 using HarmonyLib;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 namespace KuboMod
@@ -25,6 +26,7 @@ namespace KuboMod
             var harmony = new Harmony("com.kuborro.plugins.fp2.kubomod");
             harmony.PatchAll(typeof(PatchPommy));
             harmony.PatchAll(typeof(PatchInstanceNPC));
+            harmony.PatchAll(typeof(PatchNPCList));
             harmony.PatchAll(typeof(PatchGetID));
             harmony.PatchAll(typeof(PatchTrains));
         }
@@ -33,12 +35,12 @@ namespace KuboMod
         {
             [HarmonyPostfix]
             [HarmonyPatch(typeof(FPHubNPC), nameof(FPHubNPC.OnActivation), MethodType.Normal)]
-            static void Postfix(ref string ___NPCName, FPHubNPC __instance)
+            static void Postfix(string ___NPCName, FPHubNPC __instance)
             {
                 if (___NPCName == "Pommy")
                 {
                     __instance.position = new Vector2(1652, -2456);
-                    FileLog.Log(FPStage.ValidateStageListPos(kuboObject.GetComponent<FPHubNPC>()).ToString());
+                    FPStage.ValidateStageListPos(kuboObject.GetComponent<FPHubNPC>());
                 }
             }   
         }
@@ -64,22 +66,36 @@ namespace KuboMod
             }
         }
 
+        class PatchNPCList
+        {
+            [HarmonyPostfix]
+            [HarmonyPatch(typeof(FPSaveManager), nameof(FPSaveManager.LoadFromFile), MethodType.Normal)]
+            static void Postfix(ref string[] ___npcNames)
+            {
+                if (!(___npcNames.Contains("01 02 Kubo")))
+                {
+                    ___npcNames = ___npcNames.AddToArray("01 02 Kubo");
+                }
+
+                if (FPSaveManager.npcFlag.Length < ___npcNames.Length)
+                    FPSaveManager.npcFlag = FPSaveManager.ExpandByteArray(FPSaveManager.npcFlag, ___npcNames.Length);
+                if (FPSaveManager.npcDialogHistory.Length < ___npcNames.Length)
+                    FPSaveManager.npcDialogHistory = FPSaveManager.ExpandNPCDialogHistory(FPSaveManager.npcDialogHistory, ___npcNames.Length);
+            }
+        }
         class PatchGetID
         {
-            [HarmonyPrefix]
+            [HarmonyPostfix]
             [HarmonyPatch(typeof(FPSaveManager), nameof(FPSaveManager.GetNPCNumber), MethodType.Normal)]
-            static bool Prefix(string name, ref int __result)
+            static void Postfix(string name, ref int __result)
             {
                 if (name == "Kubo")
                 {
-                    __result = FPSaveManager.GetNPCNumber("Pommy");
                     if (FPSaveManager.npcDialogHistory[__result].dialog.Length < 8)
                     {
                         FPSaveManager.npcDialogHistory[__result].dialog = new bool[8];
                     }
-                    return false;
                 }
-                return true;
             }
         }
 
