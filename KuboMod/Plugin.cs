@@ -39,7 +39,8 @@ namespace KuboMod
             {
                 if (___NPCName == "Pommy")
                 {
-                    __instance.position = new Vector2(1652, -2456);
+                    __instance.position = new Vector2(3022, -2456);
+                    __instance.idleTime = 255;
                     FPStage.ValidateStageListPos(kuboObject.GetComponent<FPHubNPC>());
                 }
             }   
