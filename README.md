@@ -16,4 +16,4 @@ Follow the BepinEx guide for setting up Visual Studio found [here](https://docs.
 Open the solution in Visual Studio and build the project.
 
 ## License:
-This mod is released under [Attribution-NonCommercial-NoDerivs CC BY-NC-ND] (https://creativecommons.org/licenses/by-nc-nd/4.0/)
+This mod is released under [Attribution-NonCommercial-NoDerivs CC BY-NC-ND](https://creativecommons.org/licenses/by-nc-nd/4.0/)
