@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace KuboMod
 {
-    [BepInPlugin("com.kuborro.plugins.fp2.kubomod", "KuboMod", "2.0.0")]
+    [BepInPlugin("com.kuborro.plugins.fp2.kubomod", "KuboMod", "2.1.0")]
     [BepInProcess("FP2.exe")]
     public class Plugin : BaseUnityPlugin
     {
@@ -19,7 +19,8 @@ namespace KuboMod
             moddedBundle = AssetBundle.LoadFromFile(Path.Combine(assetPath, "kubomod.assets"));
             if (moddedBundle == null)
             {
-                Logger.LogWarning("Failed to load AssetBundle!");
+                Logger.LogError("Failed to load AssetBundle! Mod cannot work without it, exiting. Please reinstall it.");
+                return;
             }
 
             //HarmonyFileLog.Enabled = true;
@@ -27,7 +28,6 @@ namespace KuboMod
             harmony.PatchAll(typeof(PatchPommy));
             harmony.PatchAll(typeof(PatchInstanceNPC));
             harmony.PatchAll(typeof(PatchNPCList));
-            harmony.PatchAll(typeof(PatchGetID));
             harmony.PatchAll(typeof(PatchTrains));
         }
 
@@ -35,11 +35,12 @@ namespace KuboMod
         {
             [HarmonyPostfix]
             [HarmonyPatch(typeof(FPHubNPC), nameof(FPHubNPC.OnActivation), MethodType.Normal)]
-            static void Postfix(string ___NPCName, FPHubNPC __instance)
+            static void Postfix(string ___NPCName,ref Vector2 ___start, FPHubNPC __instance)
             {
                 if (___NPCName == "Pommy")
                 {
                     __instance.position = new Vector2(3022, -2456);
+                    ___start = new Vector2(3022, -2456);
                     __instance.idleTime = 255;
                     FPStage.ValidateStageListPos(kuboObject.GetComponent<FPHubNPC>());
                 }
@@ -66,7 +67,6 @@ namespace KuboMod
                 }
             }
         }
-
         class PatchNPCList
         {
             [HarmonyPostfix]
@@ -82,21 +82,13 @@ namespace KuboMod
                     FPSaveManager.npcFlag = FPSaveManager.ExpandByteArray(FPSaveManager.npcFlag, ___npcNames.Length);
                 if (FPSaveManager.npcDialogHistory.Length < ___npcNames.Length)
                     FPSaveManager.npcDialogHistory = FPSaveManager.ExpandNPCDialogHistory(FPSaveManager.npcDialogHistory, ___npcNames.Length);
-            }
-        }
-        class PatchGetID
-        {
-            [HarmonyPostfix]
-            [HarmonyPatch(typeof(FPSaveManager), nameof(FPSaveManager.GetNPCNumber), MethodType.Normal)]
-            static void Postfix(string name, ref int __result)
-            {
-                if (name == "Kubo")
+
+                int id = FPSaveManager.GetNPCNumber("Kubo");
+                if (FPSaveManager.npcDialogHistory[id].dialog.Length < 8)
                 {
-                    if (FPSaveManager.npcDialogHistory[__result].dialog.Length < 8)
-                    {
-                        FPSaveManager.npcDialogHistory[__result].dialog = new bool[8];
-                    }
+                    FPSaveManager.npcDialogHistory[id].dialog = new bool[8];
                 }
+
             }
         }
 
