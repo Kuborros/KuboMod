@@ -14,11 +14,10 @@ The mod also adds few friend cameos to the trains in Shenlin Park.
 ## Install:
 [Use FP2 Mod Manager](https://gamebanana.com/tools/10870).
 
-## Prerequisites:
-The mod requires [BepinEx 5](https://github.com/BepInEx/BepInEx) to function. You can download it here:
-* [Direct Download](https://github.com/BepInEx/BepInEx/releases/download/v5.4.21/BepInEx_x86_5.4.21.0.zip)  
+##Manual Install:
 
-Extract the downloaded zip file in to the main game directory.  
+* Install BepInEx 5 [(Direct Download)](https://github.com/BepInEx/BepInEx/releases/download/v5.4.21/BepInEx_x86_5.4.21.0.zip) - extract the downloaded file into main game directory.
+* Install the mod - extract the zipfile contents into the main game dir - (if asked, agree to merge the BepInEx folders).
 
 ## Building:
 Follow the BepinEx guide for setting up Visual Studio found [here](https://docs.bepinex.dev/master/index.html).  
