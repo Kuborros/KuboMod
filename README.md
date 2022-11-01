@@ -12,7 +12,7 @@ It also moves Pommy out of the way, but in return i have granted him ability to 
 The mod also adds few friend cameos to the trains in Shenlin Park.
 
 ## Install:
-     [Use FP2 Mod Manager](https://gamebanana.com/tools/10870).
+[Use FP2 Mod Manager](https://gamebanana.com/tools/10870).
 
 ## Prerequisites:
 The mod requires [BepinEx 5](https://github.com/BepInEx/BepInEx) to function. You can download it here:
