@@ -84,7 +84,7 @@ namespace KuboMod
                     FPSaveManager.npcDialogHistory = FPSaveManager.ExpandNPCDialogHistory(FPSaveManager.npcDialogHistory, ___npcNames.Length);
 
                 int id = FPSaveManager.GetNPCNumber("Kubo");
-                if (FPSaveManager.npcDialogHistory[id].dialog.Length < 8)
+                if (FPSaveManager.npcDialogHistory[id].dialog.Length != 8)
                 {
                     FPSaveManager.npcDialogHistory[id].dialog = new bool[8];
                 }
