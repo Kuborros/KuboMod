@@ -73,9 +73,6 @@ namespace KuboMod
             [HarmonyPatch(typeof(FPSaveManager), nameof(FPSaveManager.LoadFromFile), MethodType.Normal)]
             static void Postfix(ref string[] ___npcNames)
             {
-                if (FPSaveManager.gameMode == FPGameMode.CLASSIC) return;
-                if (___npcNames == null) return;
-
                 if (!(___npcNames.Contains("01 02 Kubo")))
                 {
                     ___npcNames = ___npcNames.AddToArray("01 02 Kubo");
@@ -87,11 +84,14 @@ namespace KuboMod
                     FPSaveManager.npcDialogHistory = FPSaveManager.ExpandNPCDialogHistory(FPSaveManager.npcDialogHistory, ___npcNames.Length);
 
                 int id = FPSaveManager.GetNPCNumber("Kubo");
-                if (FPSaveManager.npcDialogHistory[id].dialog.Length != 8)
+                if (id != 0 && FPSaveManager.npcDialogHistory[id].dialog == null)
                 {
                     FPSaveManager.npcDialogHistory[id].dialog = new bool[8];
                 }
-
+                else if (id != 0 && FPSaveManager.npcDialogHistory[id].dialog.Length != 8)
+                {
+                    FPSaveManager.npcDialogHistory[id].dialog = new bool[8];
+                }
             }
         }
 
