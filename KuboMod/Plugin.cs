@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace KuboMod
 {
-    [BepInPlugin("com.kuborro.plugins.fp2.kubomod", "KuboMod", "2.1.0")]
+    [BepInPlugin("com.kuborro.plugins.fp2.kubomod", "KuboMod", "2.1.1")]
     [BepInProcess("FP2.exe")]
     public class Plugin : BaseUnityPlugin
     {
@@ -73,6 +73,9 @@ namespace KuboMod
             [HarmonyPatch(typeof(FPSaveManager), nameof(FPSaveManager.LoadFromFile), MethodType.Normal)]
             static void Postfix(ref string[] ___npcNames)
             {
+                if (FPSaveManager.gameMode == FPGameMode.CLASSIC) return;
+                if (___npcNames == null) return;
+
                 if (!(___npcNames.Contains("01 02 Kubo")))
                 {
                     ___npcNames = ___npcNames.AddToArray("01 02 Kubo");
