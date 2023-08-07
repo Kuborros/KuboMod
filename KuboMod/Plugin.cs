@@ -1,13 +1,12 @@
 ﻿using BepInEx;
 using HarmonyLib;
 using System.IO;
-using System.Linq;
 using UnityEngine;
 
 namespace KuboMod
 {
     [BepInPlugin("com.kuborro.plugins.fp2.kubomod", "KuboMod", "3.0.0")]
-    [BepInDependency("000.kuborro.plugins.fp2.npclib")]
+    [BepInDependency("000.kuborro.libraries.fp2.fp2lib")]
     [BepInProcess("FP2.exe")]
     public class Plugin : BaseUnityPlugin
     {
@@ -25,7 +24,7 @@ namespace KuboMod
             }
 
             kuboObject = moddedBundle.LoadAsset<GameObject>("NPC_Kubo");
-            FP2NPCLib.FP2NPCLib.registerNPC("com.kuborros.kubo","Kubo","Battlesphere Lobby", kuboObject,1,2,8);
+            FP2Lib.NPC.NPCHandler.RegisterNPC("com.kuborros.kubo","Kubo","Battlesphere Lobby", kuboObject,1,2,8);
 
             var harmony = new Harmony("com.kuborro.plugins.fp2.kubomod");
             harmony.PatchAll(typeof(PatchPommy));
