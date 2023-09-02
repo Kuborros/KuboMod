@@ -18,10 +18,14 @@ The mod also adds few friend cameos to the trains in Shenlin Park.
 
 * Install BepInEx 5 [(Direct Download)](https://github.com/BepInEx/BepInEx/releases/download/v5.4.21/BepInEx_x86_5.4.21.0.zip) - extract the downloaded file into main game directory.
 * Install the mod - extract the zipfile contents into the main game dir - (if asked, agree to merge the BepInEx folders).
+* Install FP2Lib [(Github Repo)](https://github.com/Kuborros/FP2Lib) - install same way as the mod.
 
 ## Building:
-Follow the BepinEx guide for setting up Visual Studio found [here](https://docs.bepinex.dev/master/index.html).  
-Open the solution in Visual Studio and build the project.
+* Follow the BepinEx guide for setting up Visual Studio found [here](https://docs.bepinex.dev/master/index.html).  
+* Add FP2Lib as assembly reference.
+* Open the solution in Visual Studio.
+* Add FP2Lib as assembly reference.
+* Build the project.
 
 ## License:
 This mod is released under [Attribution-NonCommercial-NoDerivs CC BY-NC-ND](https://creativecommons.org/licenses/by-nc-nd/4.0/)
