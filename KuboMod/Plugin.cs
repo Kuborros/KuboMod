@@ -30,7 +30,6 @@ namespace KuboMod
 
             var harmony = new Harmony("com.kuborro.plugins.fp2.kubomod");
             harmony.PatchAll(typeof(PatchPommy));
-            harmony.PatchAll(typeof(PatchTrains));
         }
 
         class PatchPommy
@@ -47,27 +46,6 @@ namespace KuboMod
                 }
             }   
         }
-
-        class PatchTrains
-        {
-            [HarmonyPostfix]
-            [HarmonyPatch(typeof(MovingTrain), "Start", MethodType.Normal)]
-            static void Postfix(MovingTrain __instance)
-            {
-                GameObject spTrain = __instance.gameObject;
-                SpriteRenderer[] spriteRenderers = spTrain.GetComponentsInChildren<SpriteRenderer>();
-
-                foreach (SpriteRenderer spriteRenderer in spriteRenderers)
-                {
-                    if (spriteRenderer.sprite.texture.name == "SpriteAtlasTexture-Passengers-256x256-fmt4")
-                    {
-                        spriteRenderer.sprite.texture.LoadImage(cameoTexture.EncodeToPNG());
-                    }
-                }
-
-            }
-        }
-
     }
 }
 
