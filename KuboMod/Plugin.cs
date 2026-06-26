@@ -13,7 +13,6 @@ namespace KuboMod
 
         public static AssetBundle moddedBundle;
         public static GameObject kuboObject;
-        public static Texture2D cameoTexture;
         private void Awake()
         {
             string assetPath = Path.Combine(Path.GetFullPath("."), "mod_overrides");
@@ -25,7 +24,6 @@ namespace KuboMod
             }
 
             kuboObject = moddedBundle.LoadAsset<GameObject>("NPC_Kubo");
-            cameoTexture = moddedBundle.LoadAsset<Texture2D>("Passengers_Cameos");
             FP2Lib.NPC.NPCHandler.RegisterNPC("com.kuborros.kubo","Kubo","Battlesphere Lobby", kuboObject,1,2,8);
 
             var harmony = new Harmony("com.kuborro.plugins.fp2.kubomod");
