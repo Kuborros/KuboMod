@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace KuboMod
 {
-    [BepInPlugin("com.kuborro.plugins.fp2.kubomod", "KuboMod", "3.0.0")]
+    [BepInPlugin("com.kuborro.plugins.fp2.kubomod", "KuboMod", "3.0.1")]
     [BepInDependency("000.kuborro.libraries.fp2.fp2lib")]
     [BepInProcess("FP2.exe")]
     public class Plugin : BaseUnityPlugin
@@ -13,7 +13,6 @@ namespace KuboMod
 
         public static AssetBundle moddedBundle;
         public static GameObject kuboObject;
-        public static Texture2D cameoTexture;
         private void Awake()
         {
             string assetPath = Path.Combine(Path.GetFullPath("."), "mod_overrides");
@@ -25,12 +24,10 @@ namespace KuboMod
             }
 
             kuboObject = moddedBundle.LoadAsset<GameObject>("NPC_Kubo");
-            cameoTexture = moddedBundle.LoadAsset<Texture2D>("Passengers_Cameos");
             FP2Lib.NPC.NPCHandler.RegisterNPC("com.kuborros.kubo","Kubo","Battlesphere Lobby", kuboObject,1,2,8);
 
             var harmony = new Harmony("com.kuborro.plugins.fp2.kubomod");
             harmony.PatchAll(typeof(PatchPommy));
-            harmony.PatchAll(typeof(PatchTrains));
         }
 
         class PatchPommy
@@ -47,27 +44,6 @@ namespace KuboMod
                 }
             }   
         }
-
-        class PatchTrains
-        {
-            [HarmonyPostfix]
-            [HarmonyPatch(typeof(MovingTrain), "Start", MethodType.Normal)]
-            static void Postfix(MovingTrain __instance)
-            {
-                GameObject spTrain = __instance.gameObject;
-                SpriteRenderer[] spriteRenderers = spTrain.GetComponentsInChildren<SpriteRenderer>();
-
-                foreach (SpriteRenderer spriteRenderer in spriteRenderers)
-                {
-                    if (spriteRenderer.sprite.texture.name == "SpriteAtlasTexture-Passengers-256x256-fmt4")
-                    {
-                        spriteRenderer.sprite.texture.LoadImage(cameoTexture.EncodeToPNG());
-                    }
-                }
-
-            }
-        }
-
     }
 }
 
